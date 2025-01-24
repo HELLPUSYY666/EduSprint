@@ -16,3 +16,7 @@ class Lesson(models.Model):
     content = models.TextField()
 
 
+class Quiz(models.Model):
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='quizzes')
+    question = models.TextField()
+    answer = models.TextField()
