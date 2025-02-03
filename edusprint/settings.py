@@ -2,7 +2,6 @@ from pathlib import Path
 import dotenv
 import os
 
-
 email = os.getenv('email')
 password_email = os.getenv('password')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,6 +31,7 @@ INSTALLED_APPS = [
     'courses',
     'progress',
     'users',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -69,10 +69,15 @@ WSGI_APPLICATION = 'edusprint.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'django_db_first',
+        'USER': 'zakariyapolevchishikov',
+        'PASSWORD': 'zakaolga2005',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -120,3 +125,17 @@ EMAIL_HOST_USER = email
 EMAIL_HOST_PASSWORD = password_email
 EMAIL_PORT = 587
 
+# REDIS
+REDIS_HOST = '0.0.0.0'
+REDIS_PORT = 6379
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + str(REDIS_PORT) + '/0'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
