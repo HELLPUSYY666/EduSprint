@@ -11,6 +11,7 @@ urlpatterns = [
     path('progress/', include('progress.urls')),
     path('users/', include('users.urls')),
     path('api-auth/', include('rest_framework.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 if settings.DEBUG:
