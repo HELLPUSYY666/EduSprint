@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import render
@@ -31,6 +31,12 @@ class CourseUpdateView(UpdateView):
     form_class = CourseForm
     template_name = 'courses/course_form.html'
     success_url = '/'
+
+
+class CourseDeleteView(DeleteView):
+    model = Course
+    success_url = '/'
+    template_name = 'courses/course_del.html'
 
 
 class LessonListView(ListView):
