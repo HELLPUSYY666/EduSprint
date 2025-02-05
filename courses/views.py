@@ -1,14 +1,16 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from django.shortcuts import render
 from .forms import CourseForm, LessonForm, QuizForm
 from courses.models import Course, Lesson, Quiz
 from courses.serializer import CourseSerializer, LessonSerializer, QuizSerializer
+from rest_framework.generics import ListAPIView
 
 
-class CourseListView(ListView):
-    model = Course
-    template_name = 'courses/course_list.html'
-    context_object_name = 'courses'
+class CourseListView(ListAPIView):
+    queryset = Course.objects.all()  # Указываем queryset
+    serializer_class = CourseSerializer  # Указываем сериализатор
 
 
 class CourseDetailView(DetailView):
