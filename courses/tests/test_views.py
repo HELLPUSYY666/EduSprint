@@ -55,3 +55,20 @@ class CourseDetailViewTest(APITestCase):
 
 
 class CourseCreateViewTest(APITestCase):
+    def setUp(self):
+        self.user = CustomUser.objects.create_user(username="ZAKA", password="password123")
+        self.client.login(username='ZAKA', password='password123')
+
+    def test_course_create_view(self):
+        data = {
+            'title': 'Django - 1',
+            'description': 'Django course',
+            'instructor': self.user.id
+        }
+        response = self.client.post(reverse('course-create'), data)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Course.objects.count(), 1)
+        course = Course.objects.first()
+        self.assertEqual(course.title, 'Django - 1')
+        self.assertEqual(course.description, 'Django course')
