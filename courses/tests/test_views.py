@@ -98,3 +98,31 @@ class CourseDeleteViewTest(APITestCase):
         response = self.client.post(reverse('course-delete', kwargs={'pk': self.course.pk}))
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Course.objects.count(), 0)
+
+
+class LessonListViewTest(APITestCase):
+    def setUp(self):
+        self.user = CustomUser.objects.create_user(username="ZAKA", password="password123")
+        self.client.login(username='ZAKA', password='password123')
+
+        self.course1 = Course.objects.create(
+            title='Django - 1',
+            description='This is the django course',
+            instructor=self.user,
+            created_at=datetime.now()
+        )
+        self.lesson1 = Lesson.objects.create(
+            course=self.course1,
+            title='THIS IS THE FIRST LESSON',
+            video_url='https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            content='Content of this lesson'
+        )
+
+    def test_lesson_list_view(self):
+        url = reverse('lesson-list')
+        response = self.client.get(url)
+
+        serializer_data = LessonSerializer([self.lesson1], many=True).data
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, serializer_data)
