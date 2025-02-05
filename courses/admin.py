@@ -1,12 +1,21 @@
 from django.contrib import admin
 
-from courses.models import Course
+from courses.models import Course, Lesson, Quiz
 
 
-class CourseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description')
-    search_fields = ('title', 'description')
+@admin.register(Course)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'description')
+    search_fields = ('id', 'title', 'description')
 
-    class Meta:
-        model = Course
-        fields = '__all__'
+
+@admin.register(Lesson)
+class LessonAdmin(admin.ModelAdmin):
+    list_display = ('course', 'title', 'content', 'video_url')
+    search_fields = ('course', 'title', 'content')
+
+
+@admin.register(Quiz)
+class LessonAdmin(admin.ModelAdmin):
+    list_display = ('lesson', 'question', 'answer')
+    search_fields = ('lesson', 'question', 'answer')
