@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<h1>Lessons</h1>
+<ul>
+    {% for lesson in lessons %}
+        <li><a href="{% url 'lesson-detail' lesson.pk %}">{{ lesson.title }}</a></li>
+    {% endfor %}
+</ul>
+<a href="{% url 'lesson-create' %}">Create new lesson</a>
