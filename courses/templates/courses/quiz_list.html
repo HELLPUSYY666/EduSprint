@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+<h1>Quizes</h1>
+<ul>
+    {% for quiz in quizzes %}
+        <li><a href="{% url 'quiz-detail' quiz.pk %}">{{ quiz.question }}</a></li>
+    {% endfor %}
+</ul>
+<a href="{% url 'quiz-create' %}">Create new quizes</a>
