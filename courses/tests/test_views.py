@@ -84,6 +84,17 @@ class CourseUpdateViewTest(APITestCase):
         data = {'title': 'Updated Django - 1', 'description': 'Updated description', 'instructor': self.user.id}
         response = self.client.post(reverse('course-update', kwargs={'pk': self.course.pk}), data)
         self.assertEqual(response.status_code, 302)
+        self.course.refresh_from_db()
         self.assertEqual(self.course.title, 'Updated Django - 1')
 
 
+class CourseDeleteViewTest(APITestCase):
+    def setUp(self):
+        self.user = CustomUser.objects.create_user(username="ZAKA", password="password123")
+        self.client.login(username='ZAKA', password='password123')
+        self.course = Course.objects.create(title='Django - 1', description='Django course', instructor=self.user)
+
+    def test_course_delete_view(self):
+        response = self.client.post(reverse('course-delete', kwargs={'pk': self.course.pk}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Course.objects.count(), 0)
