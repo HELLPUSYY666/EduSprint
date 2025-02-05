@@ -10,6 +10,7 @@ from rest_framework.generics import ListAPIView
 
 class CourseListView(ListAPIView):
     queryset = Course.objects.all()
+    template_name = 'courses/course_list.html'
     serializer_class = CourseSerializer
 
 
@@ -39,10 +40,11 @@ class CourseDeleteView(DeleteView):
     template_name = 'courses/course_del.html'
 
 
-class LessonListView(ListView):
-    model = Lesson
+class LessonListView(ListAPIView):
+    queryset = Lesson.objects.all()
     template_name = 'courses/lesson_list.html'
     context_object_name = 'lessons'
+    serializer_class = LessonSerializer
 
 
 class LessonDetailView(DetailView):
