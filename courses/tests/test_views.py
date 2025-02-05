@@ -39,3 +39,19 @@ class CourseListViewTest(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, serializer_data)
+
+
+class CourseDetailViewTest(APITestCase):
+    def setUp(self):
+        self.user = CustomUser.objects.create_user(username="ZAKA", password="password123")
+        self.client.login(username='ZAKA', password='password123')
+        self.course = Course.objects.create(title='Django - 1', description='Django course', instructor=self.user)
+
+    def test_course_detail_view(self):
+        response = self.client.get(reverse('course-detail', kwargs={'pk': self.course.pk}))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Django - 1')
+        self.assertContains(response, 'Django course')
+
+
+class CourseCreateViewTest(APITestCase):

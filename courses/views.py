@@ -9,8 +9,8 @@ from rest_framework.generics import ListAPIView
 
 
 class CourseListView(ListAPIView):
-    queryset = Course.objects.all()  # Указываем queryset
-    serializer_class = CourseSerializer  # Указываем сериализатор
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
 
 
 class CourseDetailView(DetailView):
